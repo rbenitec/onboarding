@@ -24,23 +24,27 @@ public class UserController {
     private final UserService userService;
     private final TestService testService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/created")
     public ResponseEntity<WrapperResponse<UserEntity>> saveUser(@RequestBody UserEntity user) {
         return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.saveUser(user)).createResponse();
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/get-all")
     public ResponseEntity<WrapperResponse<List<UserEntity>>> getAllUser() {
         return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.getAllUser()).createResponse();
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/test/get-all")
     public ResponseEntity<WrapperResponse<List<TestEntity>>> getAllTest() {
         return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", testService.getAllTest()).createResponse();
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/ranking/get-all")
     public ResponseEntity<WrapperResponse<List<RankingDto>>> getUserRanking() {
         return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.getUserRanking()).createResponse();
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/get-all/{userId}")
     public ResponseEntity<WrapperResponse<UserEntity>> getUserById(@PathVariable("userId") Integer userId) {
         Optional<UserEntity> user = userService.getUserById(userId);
@@ -50,10 +54,12 @@ public class UserController {
             return new WrapperResponse<>(Boolean.FALSE, "FAILED", UserEntity.builder().build()).createResponse();
         }
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/created/test")
     public ResponseEntity<WrapperResponse<TestEntity>> registerTest(@RequestBody TestEntity test) {
         return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", testService.saveTest(test)).createResponse();
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/authenticate")
     public ResponseEntity<WrapperResponse<ResponseUtpClient>> userAuthentication (@RequestBody RequestUtpClient requestUtpClient) {
         log.info("POST --> Se llamo al endPoint authenticate: {}", requestUtpClient.toString());
@@ -64,6 +70,7 @@ public class UserController {
             return new WrapperResponse<>(Boolean.FALSE, "Usuario no existe", ResponseUtpClient.builder().build()).createResponse();
         }
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/created-user")
     public ResponseEntity<?> createdUser(@Valid @RequestBody CreatedUserDto userDto){
         Optional<UserEntity> userExist = userService.findByUsername(userDto.getUsername());
