@@ -25,7 +25,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Optional<TestEntity> getTestByUserId(Integer userId) {
-        return testRepository.findById(userId);
+        return testRepository.findTestByUserId(userId);
     }
 
     @Override

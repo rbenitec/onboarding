@@ -2,10 +2,7 @@ package com.utp.hackaton.onborading.user_service.controller;
 
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
-import com.utp.hackaton.onborading.user_service.model.dto.CreatedUserDto;
-import com.utp.hackaton.onborading.user_service.model.dto.RequestUtpClient;
-import com.utp.hackaton.onborading.user_service.model.dto.ResponseErrorDto;
-import com.utp.hackaton.onborading.user_service.model.dto.ResponseUtpClient;
+import com.utp.hackaton.onborading.user_service.model.dto.*;
 import com.utp.hackaton.onborading.user_service.service.TestService;
 import com.utp.hackaton.onborading.user_service.service.UserService;
 import jakarta.validation.Valid;
@@ -36,7 +33,14 @@ public class UserController {
     public ResponseEntity<WrapperResponse<List<UserEntity>>> getAllUser() {
         return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.getAllUser()).createResponse();
     }
-
+    @GetMapping("/test/get-all")
+    public ResponseEntity<WrapperResponse<List<TestEntity>>> getAllTest() {
+        return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", testService.getAllTest()).createResponse();
+    }
+    @GetMapping("/ranking/get-all")
+    public ResponseEntity<WrapperResponse<List<RankingDto>>> getUserRanking() {
+        return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.getUserRanking()).createResponse();
+    }
     @GetMapping("/get-all/{userId}")
     public ResponseEntity<WrapperResponse<UserEntity>> getUserById(@PathVariable("userId") Integer userId) {
         Optional<UserEntity> user = userService.getUserById(userId);

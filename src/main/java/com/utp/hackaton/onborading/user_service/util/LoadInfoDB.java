@@ -1,6 +1,8 @@
 package com.utp.hackaton.onborading.user_service.util;
 
+import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
+import com.utp.hackaton.onborading.user_service.repository.TestRepository;
 import com.utp.hackaton.onborading.user_service.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,11 @@ import java.time.LocalDate;
 @Component
 public class LoadInfoDB {
     private final UserRepository userRepository;
+    private final TestRepository testRepository;
 
     @Autowired
-    public LoadInfoDB(UserRepository userRepository) {
+    public LoadInfoDB(UserRepository userRepository, TestRepository testRepository) {
+        this.testRepository = testRepository;
         this.userRepository = userRepository;
     }
 
@@ -131,6 +135,100 @@ public class LoadInfoDB {
         user_10.setPassword("1001");
         user_10.setCreatedAt(LocalDate.now());
         userRepository.save(user_10);
+
+        /**
+         * Load test users
+         */
+
+        TestEntity test1 = new TestEntity();
+        test1.setTestA(86.30);
+        test1.setTestB(75.50);
+        test1.setTestC(63.20);
+        test1.setTestD(96.32);
+        test1.setAverage(84.50);
+        test1.setUserId(1);
+        testRepository.save(test1);
+
+        TestEntity test2 = new TestEntity();
+        test2.setTestA(95.30);
+        test2.setTestB(75.50);
+        test2.setTestC(89.30);
+        test2.setTestD(92.40);
+        test2.setAverage(81.20);
+        test2.setUserId(2);
+        testRepository.save(test2);
+
+        TestEntity test3 = new TestEntity();
+        test3.setTestA(95.30);
+        test3.setTestB(69.90);
+        test3.setTestC(79.89);
+        test3.setTestD(99.90);
+        test3.setAverage(80.20);
+        test3.setUserId(3);
+        testRepository.save(test3);
+
+        TestEntity test4 = new TestEntity();
+        test4.setTestA(75.40);
+        test4.setTestB(60.50);
+        test4.setTestC(80.40);
+        test4.setTestD(70.40);
+        test4.setAverage(71.60);
+        test4.setUserId(4);
+        testRepository.save(test4);
+
+        TestEntity test5 = new TestEntity();
+        test5.setTestA(86.30);
+        test5.setTestB(75.50);
+        test5.setTestC(63.20);
+        test5.setTestD(96.32);
+        test5.setAverage(75.60);
+        test5.setUserId(5);
+        testRepository.save(test5);
+
+        TestEntity test6 = new TestEntity();
+        test6.setTestA(86.30);
+        test6.setTestB(75.50);
+        test6.setTestC(63.20);
+        test6.setTestD(96.32);
+        test6.setAverage(90.60);
+        test6.setUserId(6);
+        testRepository.save(test6);
+
+        TestEntity test7 = new TestEntity();
+        test7.setTestA(86.30);
+        test7.setTestB(75.50);
+        test7.setTestC(63.20);
+        test7.setTestD(96.32);
+        test7.setAverage(92.50);
+        test7.setUserId(7);
+        testRepository.save(test7);
+
+        TestEntity test8 = new TestEntity();
+        test8.setTestA(86.30);
+        test8.setTestB(75.50);
+        test8.setTestC(63.20);
+        test8.setTestD(96.32);
+        test8.setAverage(93.60);
+        test8.setUserId(8);
+        testRepository.save(test8);
+
+        TestEntity test9 = new TestEntity();
+        test9.setTestA(86.30);
+        test9.setTestB(75.50);
+        test9.setTestC(63.20);
+        test9.setTestD(96.32);
+        test9.setAverage(60.90);
+        test9.setUserId(9);
+        testRepository.save(test9);
+
+        TestEntity test10 = new TestEntity();
+        test10.setTestA(98.60);
+        test10.setTestB(95.50);
+        test10.setTestC(96.60);
+        test10.setTestD(91.50);
+        test10.setAverage(96.70);
+        test10.setUserId(10);
+        testRepository.save(test10);
 
     }
 }
