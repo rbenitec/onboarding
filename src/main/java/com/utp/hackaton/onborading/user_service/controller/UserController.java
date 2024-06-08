@@ -1,8 +1,10 @@
 package com.utp.hackaton.onborading.user_service.controller;
 
+import com.utp.hackaton.onborading.user_service.entity.EventEntity;
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
 import com.utp.hackaton.onborading.user_service.model.dto.*;
+import com.utp.hackaton.onborading.user_service.service.EventService;
 import com.utp.hackaton.onborading.user_service.service.TestService;
 import com.utp.hackaton.onborading.user_service.service.UserService;
 import jakarta.validation.Valid;
@@ -23,6 +25,7 @@ public class UserController {
 
     private final UserService userService;
     private final TestService testService;
+    private final EventService eventService;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/created")
@@ -53,6 +56,11 @@ public class UserController {
         } else {
             return new WrapperResponse<>(Boolean.FALSE, "FAILED", UserEntity.builder().build()).createResponse();
         }
+    }
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/event/get-all")
+    public ResponseEntity<WrapperResponse<List<EventEntity>>> getEvent() {
+        return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", eventService.findAllEvents()).createResponse();
     }
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/created/test")

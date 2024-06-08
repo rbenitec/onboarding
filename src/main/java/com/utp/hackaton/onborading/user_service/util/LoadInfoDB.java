@@ -1,7 +1,9 @@
 package com.utp.hackaton.onborading.user_service.util;
 
+import com.utp.hackaton.onborading.user_service.entity.EventEntity;
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
+import com.utp.hackaton.onborading.user_service.repository.EventRepository;
 import com.utp.hackaton.onborading.user_service.repository.TestRepository;
 import com.utp.hackaton.onborading.user_service.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
@@ -9,17 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Component
 public class LoadInfoDB {
     private final UserRepository userRepository;
     private final TestRepository testRepository;
+    private final EventRepository eventRepository;
 
     @Autowired
-    public LoadInfoDB(UserRepository userRepository, TestRepository testRepository) {
+    public LoadInfoDB(UserRepository userRepository, TestRepository testRepository, EventRepository eventRepository) {
         this.testRepository = testRepository;
         this.userRepository = userRepository;
+        this.eventRepository = eventRepository;
     }
 
     @PostConstruct
@@ -229,6 +234,90 @@ public class LoadInfoDB {
         test10.setAverage(96.70);
         test10.setUserId(10);
         testRepository.save(test10);
+
+        loadInfoEvents();
+    }
+
+    private void loadInfoEvents() {
+        EventEntity event1 = new EventEntity();
+        event1.setName("Bienvenida a la UTP");
+        event1.setLugar("Auditorio Principal");
+        event1.setImagenURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaQaTQ88TnLudIw8nISX-5ERbFmQtaBv9XgA&s");
+        event1.setFecha(LocalDate.now());
+        event1.setAvailable(1);
+        eventRepository.save(event1);
+
+        EventEntity event2 = new EventEntity();
+        event2.setName("Taller de Orientación Académica");
+        event2.setLugar("Sala de Conferencias B");
+        event2.setImagenURL("https://www.bitacorarevista.com/web/wp-content/uploads/WhatsApp-Image-2022-01-27-at-9.56.00-AM-2.jpg");
+        event2.setFecha(LocalDate.now());
+        event2.setAvailable(1);
+        eventRepository.save(event2);
+
+        EventEntity event3 = new EventEntity();
+        event3.setName("Tour por el Campus");
+        event3.setLugar("Punto de Encuentro en la Entrada Principal");
+        event3.setImagenURL("");
+        event3.setFecha(LocalDate.now());
+        event3.setAvailable(1);
+        eventRepository.save(event3);
+
+        EventEntity event4 = new EventEntity();
+        event4.setName("Feria de Clubes y Actividades Extracurriculares");
+        event4.setLugar("Plaza Central");
+        event4.setImagenURL("https://www.bitacorarevista.com/web/wp-content/uploads/WhatsApp-Image-2022-01-27-at-9.56.00-AM-2.jpg");
+        event4.setFecha(LocalDate.now());
+        event4.setAvailable(1);
+        eventRepository.save(event4);
+
+        EventEntity event5 = new EventEntity();
+        event5.setName("Sesión Informativa sobre Servicios Estudiantiles");
+        event5.setLugar("Auditorio Secundario");
+        event5.setImagenURL("https://dvc.com.pe/wp-content/uploads/Ampliacion-UTP-Norte-5.jpg");
+        event5.setFecha(LocalDate.now());
+        event5.setAvailable(1);
+        eventRepository.save(event5);
+
+        EventEntity event6 = new EventEntity();
+        event6.setName("Charla sobre Vida Universitaria y Bienestar");
+        event6.setLugar("Sala de Conferencias A");
+        event6.setImagenURL("https://www.bitacorarevista.com/web/wp-content/uploads/SALA-BIM-960x720.jpg");
+        event6.setFecha(LocalDate.now());
+        event6.setAvailable(1);
+        eventRepository.save(event6);
+
+        EventEntity event7 = new EventEntity();
+        event7.setName("Introducción a las Plataformas Digitales de la UTP");
+        event7.setLugar("Laboratorio de Computación 1");
+        event7.setImagenURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAbXriiGnfEZQEVAW7D4E-gc0JCD9HxScGwAwToPrEFD0DjrZe5QLdCJ_vZfHLlry9PRU&usqp=CAU");
+        event7.setFecha(LocalDate.now());
+        event7.setAvailable(1);
+        eventRepository.save(event7);
+
+        EventEntity event8 = new EventEntity();
+        event8.setName("Taller de Habilidades de Estudio y Gestión del Tiempo");
+        event8.setLugar("Sala de Talleres 3");
+        event8.setImagenURL("https://img.freepik.com/foto-gratis/orador-masculino-dando-presentacion-salon-taller-universitario-audiencia-o-sala-conferencias_155003-17907.jpg?size=626&ext=jpg&ga=GA1.1.672697106.1714867200&semt=ais");
+        event8.setFecha(LocalDate.now());
+        event8.setAvailable(1);
+        eventRepository.save(event8);
+
+        EventEntity event9 = new EventEntity();
+        event9.setName("Reunión con Mentores Académicos");
+        event9.setLugar("Aula Magna");
+        event9.setImagenURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_bQ750GBLXALuhQbQB3VRhrst6QrnN_anWA&s");
+        event9.setFecha(LocalDate.now());
+        event9.setAvailable(1);
+        eventRepository.save(event9);
+
+        EventEntity event10 = new EventEntity();
+        event10.setName("Sesión de Networking con Profesores y Compañeros");
+        event10.setLugar("Cafetería Principal");
+        event10.setImagenURL("https://cache.marriott.com/content/dam/marriott-renditions/ATLMQ/atlmq-sear-5826-hor-feat.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1920px:*");
+        event10.setFecha(LocalDate.now());
+        event10.setAvailable(1);
+        eventRepository.save(event10);
 
     }
 }
