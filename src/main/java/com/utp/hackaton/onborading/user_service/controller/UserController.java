@@ -119,11 +119,10 @@ public class UserController {
                     .build();
             UserEntity user1 = userService.saveUser(user);
             TestEntity test =  TestEntity.builder()
-                    .testA(0.0)
-                    .testB(0.0)
-                    .testC(0.0)
-                    .testD(0.0)
-                    .average(0.0)
+                    .testA(-1.0)
+                    .testB(-1.0)
+                    .testC(-1.0)
+                    .testD(-1.0)
                     .userId(user1.getId())
                     .build();
             testService.saveTest(test);

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
         List<RankingDto> rankingDtos = new ArrayList<>();
         userRepository.findAll().forEach(user -> {
             Optional<TestEntity> testEntity = testService.getTestByUserId(user.getId());
-            if(testEntity.isPresent()){
+            if(testEntity.isPresent() && Objects.nonNull(testEntity.get().getAverage())){
                 RankingDto rankingDto =  RankingDto.builder()
                         .names(user.getNames())
                         .photo(user.getAvatar())

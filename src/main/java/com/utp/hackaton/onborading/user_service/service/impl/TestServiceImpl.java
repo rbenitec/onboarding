@@ -64,8 +64,10 @@ public class TestServiceImpl implements TestService {
         } else {
             test.setTestD(updateTestDto.getValorNota());
         }
-        Double newAvarage = (test.getTestA() + test.getTestB() + test.getTestC() + test.getTestD())/4;
-        test.setAverage(newAvarage);
+        if(test.getTestA()>=0 && test.getTestB()>=0 && test.getTestC() >=0 && test.getTestD()>=0){
+            double newAvarage = (test.getTestA() + test.getTestB() + test.getTestC() + test.getTestD())/4;
+            test.setAverage(newAvarage);
+        }
         return test;
     }
 
