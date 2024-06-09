@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:sistema
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+server:
+  port: 8085
+logging:
+  file:
+    name: /home/usrfc/mth-applications/biller/log/userservice.log
+  level:
+    root: ERROR
+    org:
+      springframework: ERROR
+      hibernate: ERROR
+    com:
+      utp:
+        hackaton:
+          onborading: DEBUG
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n"
