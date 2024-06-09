@@ -29,11 +29,6 @@ public class UserController {
     private final TestService testService;
     private final EventService eventService;
 
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @PostMapping("/created")
-//    public ResponseEntity<WrapperResponse<UserEntity>> saveUser(@RequestBody UserEntity user) {
-//        return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.saveUser(user)).createResponse();
-//    }
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/get-all")
     public ResponseEntity<WrapperResponse<List<UserEntity>>> getAllUser() {

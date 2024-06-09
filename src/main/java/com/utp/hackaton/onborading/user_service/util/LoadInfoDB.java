@@ -297,7 +297,7 @@ public class LoadInfoDB {
         EventEntity event3 = new EventEntity();
         event3.setName("Tour por el Campus");
         event3.setLugar("Punto de Encuentro en la Entrada Principal");
-        event3.setImagenURL("");
+        event3.setImagenURL("https://www.utp.edu.co/cms-utp/data/bin/UTP/web/uploads/media/comunicaciones/img/modulos-28.jpg");
         event3.setFecha(LocalDate.now());
         event3.setAvailable(1);
         eventRepository.save(event3);
