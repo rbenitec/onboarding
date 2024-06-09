@@ -3,28 +3,30 @@ package com.utp.hackaton.onborading.user_service.util;
 import com.utp.hackaton.onborading.user_service.entity.EventEntity;
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
+import com.utp.hackaton.onborading.user_service.model.dto.CreatedUserDto;
 import com.utp.hackaton.onborading.user_service.repository.EventRepository;
 import com.utp.hackaton.onborading.user_service.repository.TestRepository;
 import com.utp.hackaton.onborading.user_service.repository.UserRepository;
+import com.utp.hackaton.onborading.user_service.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 
 @Component
 public class LoadInfoDB {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final TestRepository testRepository;
     private final EventRepository eventRepository;
 
     @Autowired
-    public LoadInfoDB(UserRepository userRepository, TestRepository testRepository, EventRepository eventRepository) {
+    public LoadInfoDB(UserRepository userRepository, TestRepository testRepository, EventRepository eventRepository, UserService userService) {
         this.testRepository = testRepository;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.userService = userService;
     }
 
     @PostConstruct
@@ -236,6 +238,43 @@ public class LoadInfoDB {
         testRepository.save(test10);
 
         loadInfoEvents();
+        saveUserForDefault();
+    }
+
+    private void saveUserForDefault() {
+
+        CreatedUserDto user = CreatedUserDto.builder()
+                .username("u11")
+                .password("123")
+                .email("u11@utp.edu.pe")
+                .names("Rogelio Vargas")
+                .avatar("https://st2.depositphotos.com/1007566/12301/v/450/depositphotos_123013306-stock-illustration-avatar-man-cartoon.jpg")
+                .campus("AREQUIPA")
+                .dni("77777778")
+                .build();
+        userService.initializeUserAndTest(user);
+
+        CreatedUserDto user1 = CreatedUserDto.builder()
+                .username("u12")
+                .password("123")
+                .email("u13@utp.edu.pe")
+                .names("Noemi Trinidad Linares")
+                .avatar("https://st2.depositphotos.com/1007566/12301/v/450/depositphotos_123013306-stock-illustration-avatar-man-cartoon.jpg")
+                .campus("AREQUIPA")
+                .dni("77777778")
+                .build();
+        userService.initializeUserAndTest(user1);
+
+        CreatedUserDto user2 = CreatedUserDto.builder()
+                .username("u13")
+                .password("123")
+                .email("u13@utp.edu.pe")
+                .names("Juana lisboa Moreno")
+                .avatar("https://st2.depositphotos.com/1007566/12301/v/450/depositphotos_123013306-stock-illustration-avatar-man-cartoon.jpg")
+                .campus("AREQUIPA")
+                .dni("77777778")
+                .build();
+        userService.initializeUserAndTest(user2);
     }
 
     private void loadInfoEvents() {
