@@ -2,6 +2,7 @@ package com.utp.hackaton.onborading.user_service.service.impl;
 
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
+import com.utp.hackaton.onborading.user_service.model.ReponseUpdateTestDto;
 import com.utp.hackaton.onborading.user_service.model.dto.RankingDto;
 import com.utp.hackaton.onborading.user_service.model.dto.UserRequestDto;
 import com.utp.hackaton.onborading.user_service.repository.TestRepository;
@@ -55,6 +56,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<ReponseUpdateTestDto> getTestUser(String username) {
+        Optional<UserEntity> user = userRepository.findByUsername(username.toLowerCase());
+        if(user.isPresent()){
+            Optional<TestEntity> test = testService.getTestByUserId(user.get().getId());
+            if(test.isPresent()){
+                return Optional.of(buildResponseUpdateTest(test.get(), user.get()));
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
@@ -72,5 +85,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserEntity> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    private ReponseUpdateTestDto buildResponseUpdateTest(TestEntity testUpdate, UserEntity user) {
+        return ReponseUpdateTestDto.builder()
+                .testA(testUpdate.getTestA())
+                .testB(testUpdate.getTestB())
+                .testC(testUpdate.getTestC())
+                .testD(testUpdate.getTestD())
+                .average(testUpdate.getAverage())
+                .username(user.getUsername())
+                .build();
     }
 }

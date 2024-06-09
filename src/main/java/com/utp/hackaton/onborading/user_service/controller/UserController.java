@@ -3,6 +3,8 @@ package com.utp.hackaton.onborading.user_service.controller;
 import com.utp.hackaton.onborading.user_service.entity.EventEntity;
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
+import com.utp.hackaton.onborading.user_service.model.ReponseUpdateTestDto;
+import com.utp.hackaton.onborading.user_service.model.UpdateTestDto;
 import com.utp.hackaton.onborading.user_service.model.dto.*;
 import com.utp.hackaton.onborading.user_service.service.EventService;
 import com.utp.hackaton.onborading.user_service.service.TestService;
@@ -27,11 +29,11 @@ public class UserController {
     private final TestService testService;
     private final EventService eventService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/created")
-    public ResponseEntity<WrapperResponse<UserEntity>> saveUser(@RequestBody UserEntity user) {
-        return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.saveUser(user)).createResponse();
-    }
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @PostMapping("/created")
+//    public ResponseEntity<WrapperResponse<UserEntity>> saveUser(@RequestBody UserEntity user) {
+//        return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", userService.saveUser(user)).createResponse();
+//    }
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/get-all")
     public ResponseEntity<WrapperResponse<List<UserEntity>>> getAllUser() {
@@ -58,6 +60,16 @@ public class UserController {
         }
     }
     @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/user/get-test/{username}")
+    public ResponseEntity<WrapperResponse<ReponseUpdateTestDto>> getTestOfUser(@PathVariable("username") String username) {
+        Optional<ReponseUpdateTestDto> testUser = userService.getTestUser(username);
+        if (testUser.isPresent()){
+            return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", testUser.get()).createResponse();
+        } else {
+            return new WrapperResponse<>(Boolean.FALSE, "El Usuario no tiene notas registradas", ReponseUpdateTestDto.builder().build()).createResponse();
+        }
+    }
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/event/get-all")
     public ResponseEntity<WrapperResponse<List<EventEntity>>> getEvent() {
         return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", eventService.findAllEvents()).createResponse();
@@ -79,6 +91,17 @@ public class UserController {
         }
     }
     @CrossOrigin(origins = "http://localhost:3000")
+    @PatchMapping("/update/test")
+    public ResponseEntity<WrapperResponse<ReponseUpdateTestDto>> updateTestUser (@RequestBody UpdateTestDto updateTestDto) {
+        log.info("POST --> Se llamo al endPoint updateTestUser: {}", updateTestDto.toString());
+        ReponseUpdateTestDto updateTest = testService.updateTest(updateTestDto);
+        if(updateTest!=null){
+            return new WrapperResponse<>(Boolean.TRUE, "SUCCESS", updateTest).createResponse();
+        }else{
+            return new WrapperResponse<>(Boolean.FALSE, "FAILED", ReponseUpdateTestDto.builder().build()).createResponse();
+        }
+    }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/created-user")
     public ResponseEntity<?> createdUser(@Valid @RequestBody CreatedUserDto userDto){
         Optional<UserEntity> userExist = userService.findByUsername(userDto.getUsername());
@@ -89,11 +112,21 @@ public class UserController {
                     .password(userDto.getPassword())
                     .email(userDto.getEmail())
                     .names(userDto.getNames())
+                    .avatar(userDto.getAvatar())
+                    .campus(userDto.getCampus())
                     .dni(userDto.getDni())
                     .createdAt(LocalDate.now())
                     .build();
-
-            userService.saveUser(user);
+            UserEntity user1 = userService.saveUser(user);
+            TestEntity test =  TestEntity.builder()
+                    .testA(0.0)
+                    .testB(0.0)
+                    .testC(0.0)
+                    .testD(0.0)
+                    .average(0.0)
+                    .userId(user1.getId())
+                    .build();
+            testService.saveTest(test);
             return ResponseEntity.ok(user);
         }else {
             ResponseErrorDto responseErrorDto =  new ResponseErrorDto(202, "EL usuario ingresado ya existe");
