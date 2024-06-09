@@ -104,29 +104,9 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/created-user")
     public ResponseEntity<?> createdUser(@Valid @RequestBody CreatedUserDto userDto){
-        Optional<UserEntity> userExist = userService.findByUsername(userDto.getUsername());
-        if(userExist.isEmpty()){
-
-            UserEntity user = UserEntity.builder()
-                    .username(userDto.getUsername())
-                    .password(userDto.getPassword())
-                    .email(userDto.getEmail())
-                    .names(userDto.getNames())
-                    .avatar(userDto.getAvatar())
-                    .campus(userDto.getCampus())
-                    .dni(userDto.getDni())
-                    .createdAt(LocalDate.now())
-                    .build();
-            UserEntity user1 = userService.saveUser(user);
-            TestEntity test =  TestEntity.builder()
-                    .testA(-1.0)
-                    .testB(-1.0)
-                    .testC(-1.0)
-                    .testD(-1.0)
-                    .userId(user1.getId())
-                    .build();
-            testService.saveTest(test);
-            return ResponseEntity.ok(user);
+        Optional<UserEntity> userExist = userService.initializeUserAndTest(userDto);
+        if(userExist.isPresent()){
+            return ResponseEntity.ok(userExist.get());
         }else {
             ResponseErrorDto responseErrorDto =  new ResponseErrorDto(202, "EL usuario ingresado ya existe");
             return ResponseEntity.accepted().body(responseErrorDto);

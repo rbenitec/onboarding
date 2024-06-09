@@ -3,6 +3,7 @@ package com.utp.hackaton.onborading.user_service.service.impl;
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
 import com.utp.hackaton.onborading.user_service.model.ReponseUpdateTestDto;
+import com.utp.hackaton.onborading.user_service.model.dto.CreatedUserDto;
 import com.utp.hackaton.onborading.user_service.model.dto.RankingDto;
 import com.utp.hackaton.onborading.user_service.model.dto.UserRequestDto;
 import com.utp.hackaton.onborading.user_service.repository.TestRepository;
@@ -10,8 +11,10 @@ import com.utp.hackaton.onborading.user_service.repository.UserRepository;
 import com.utp.hackaton.onborading.user_service.service.TestService;
 import com.utp.hackaton.onborading.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -88,6 +91,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+
+
     private ReponseUpdateTestDto buildResponseUpdateTest(TestEntity testUpdate, UserEntity user) {
         return ReponseUpdateTestDto.builder()
                 .testA(testUpdate.getTestA())
@@ -97,5 +102,34 @@ public class UserServiceImpl implements UserService {
                 .average(testUpdate.getAverage())
                 .username(user.getUsername())
                 .build();
+    }
+
+    @Override
+    public Optional<UserEntity> initializeUserAndTest(CreatedUserDto userDto) {
+        Optional<UserEntity> userExist = userRepository.findByUsername(userDto.getUsername());
+        if (userExist.isEmpty()) {
+            UserEntity user = UserEntity.builder()
+                    .username(userDto.getUsername())
+                    .password(userDto.getPassword())
+                    .email(userDto.getEmail())
+                    .names(userDto.getNames())
+                    .avatar(userDto.getAvatar())
+                    .campus(userDto.getCampus())
+                    .dni(userDto.getDni())
+                    .createdAt(LocalDate.now())
+                    .build();
+            UserEntity user1 = userRepository.save(user);
+            TestEntity test = TestEntity.builder()
+                    .testA(-1.0)
+                    .testB(-1.0)
+                    .testC(-1.0)
+                    .testD(-1.0)
+                    .userId(user1.getId())
+                    .build();
+            testService.saveTest(test);
+            return Optional.of(user1);
+        }else {
+            return Optional.empty();
+        }
     }
 }
