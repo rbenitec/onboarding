@@ -20,6 +20,6 @@ public class EventEntity {
     private String name;
     private String imagenURL;
     private String lugar;
-    private Integer available;
+    private String estado;
     private LocalDate fecha;
 }

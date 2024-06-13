@@ -279,53 +279,61 @@ public class LoadInfoDB {
 
     private void loadInfoEvents() {
         EventEntity event1 = new EventEntity();
+        LocalDate fechaEvento1 = LocalDate.parse("2024-06-10");
         event1.setName("Bienvenida a la UTP");
         event1.setLugar("Auditorio Principal");
         event1.setImagenURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaQaTQ88TnLudIw8nISX-5ERbFmQtaBv9XgA&s");
-        event1.setFecha(LocalDate.now());
-        event1.setAvailable(1);
+        event1.setFecha(fechaEvento1);
+        event1.setEstado(defineEstado(fechaEvento1));
         eventRepository.save(event1);
 
         EventEntity event2 = new EventEntity();
+        LocalDate fechaEvento2 = LocalDate.parse("2024-06-11");
         event2.setName("Taller de Orientación Académica");
         event2.setLugar("Sala de Conferencias B");
         event2.setImagenURL("https://www.bitacorarevista.com/web/wp-content/uploads/WhatsApp-Image-2022-01-27-at-9.56.00-AM-2.jpg");
-        event2.setFecha(LocalDate.now());
-        event2.setAvailable(1);
+        event2.setFecha(fechaEvento2);
+        event2.setEstado(defineEstado(fechaEvento2));
         eventRepository.save(event2);
 
         EventEntity event3 = new EventEntity();
+        LocalDate fechaEvento3 = LocalDate.parse("2024-06-12");
         event3.setName("Tour por el Campus");
         event3.setLugar("Punto de Encuentro en la Entrada Principal");
         event3.setImagenURL("https://www.utp.edu.co/cms-utp/data/bin/UTP/web/uploads/media/comunicaciones/img/modulos-28.jpg");
-        event3.setFecha(LocalDate.now());
-        event3.setAvailable(1);
+        event3.setFecha(fechaEvento3);
+        event3.setEstado(defineEstado(fechaEvento3));
         eventRepository.save(event3);
 
         EventEntity event4 = new EventEntity();
+        LocalDate fechaEvento4 = LocalDate.parse("2024-06-13");
         event4.setName("Feria de Clubes y Actividades Extracurriculares");
         event4.setLugar("Plaza Central");
         event4.setImagenURL("https://www.bitacorarevista.com/web/wp-content/uploads/WhatsApp-Image-2022-01-27-at-9.56.00-AM-2.jpg");
-        event4.setFecha(LocalDate.now());
-        event4.setAvailable(1);
+        event4.setFecha(fechaEvento4);
+        event4.setEstado(defineEstado(fechaEvento4));
         eventRepository.save(event4);
 
         EventEntity event5 = new EventEntity();
+        LocalDate fechaEvento5 = LocalDate.parse("2024-06-14");
         event5.setName("Sesión Informativa sobre Servicios Estudiantiles");
         event5.setLugar("Auditorio Secundario");
         event5.setImagenURL("https://dvc.com.pe/wp-content/uploads/Ampliacion-UTP-Norte-5.jpg");
-        event5.setFecha(LocalDate.now());
-        event5.setAvailable(1);
+        event5.setFecha(fechaEvento5);
+        event5.setEstado(defineEstado(fechaEvento5));
         eventRepository.save(event5);
 
         EventEntity event6 = new EventEntity();
+        LocalDate fechaEvento6 = LocalDate.parse("2024-06-15");
         event6.setName("Charla sobre Vida Universitaria y Bienestar");
         event6.setLugar("Sala de Conferencias A");
         event6.setImagenURL("https://www.bitacorarevista.com/web/wp-content/uploads/SALA-BIM-960x720.jpg");
-        event6.setFecha(LocalDate.now());
-        event6.setAvailable(1);
+        event6.setFecha(fechaEvento6);
+        event6.setEstado(defineEstado(fechaEvento6));
         eventRepository.save(event6);
 
+        // CULMINADO, PARA HOY, PROXIMAMENTE
+        /*
         EventEntity event7 = new EventEntity();
         event7.setName("Introducción a las Plataformas Digitales de la UTP");
         event7.setLugar("Laboratorio de Computación 1");
@@ -358,5 +366,18 @@ public class LoadInfoDB {
         event10.setAvailable(1);
         eventRepository.save(event10);
 
+         */
+
+    }
+
+    private String defineEstado(LocalDate fechaEvento1) {
+        LocalDate fechaActual = LocalDate.now();
+        if(fechaEvento1.isEqual(fechaActual)){
+            return "PARA HOY";
+        } else if (fechaEvento1.isAfter(fechaActual)){
+            return "PROXIMAMENTE";
+        } else {
+            return "CULMINADO";
+        }
     }
 }
