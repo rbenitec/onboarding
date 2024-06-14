@@ -1,11 +1,13 @@
 package com.utp.hackaton.onborading.user_service.service.impl;
 
+import com.utp.hackaton.onborading.user_service.client.WhatsAppConnector;
 import com.utp.hackaton.onborading.user_service.entity.TestEntity;
 import com.utp.hackaton.onborading.user_service.entity.UserEntity;
 import com.utp.hackaton.onborading.user_service.model.ReponseUpdateTestDto;
 import com.utp.hackaton.onborading.user_service.model.dto.CreatedUserDto;
 import com.utp.hackaton.onborading.user_service.model.dto.RankingDto;
 import com.utp.hackaton.onborading.user_service.model.dto.UserRequestDto;
+import com.utp.hackaton.onborading.user_service.model.whatsapp.request.MessageRequest;
 import com.utp.hackaton.onborading.user_service.repository.TestRepository;
 import com.utp.hackaton.onborading.user_service.repository.UserRepository;
 import com.utp.hackaton.onborading.user_service.service.TestService;
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final TestService testService;
+    private final WhatsAppConnector whatsAppConnector;
 
     @Override
     public UserEntity saveUser(UserEntity user) {
@@ -83,7 +86,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserEntity> authenticateUser(String username, String password) {
-        return userRepository.authenticate(username, password);
+        Optional<UserEntity> user = userRepository.authenticate(username, password);
+        if(user.isPresent()){
+            whatsAppConnector.sendMessageWhatsApp(buildMessageWhatsApp(user.get()));
+        }
+    }
+
+    private MessageRequest buildMessageWhatsApp(UserEntity user) {
+        return MessageRequest.builder()
+                .
+                .build();
     }
 
     @Override

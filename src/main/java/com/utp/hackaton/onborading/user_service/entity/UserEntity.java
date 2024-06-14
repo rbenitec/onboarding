@@ -25,6 +25,7 @@ public class UserEntity {
     private String avatar;
     private String username;
     private String password;
+    private String celular;
     private String dni;
     private LocalDate createdAt;
 }

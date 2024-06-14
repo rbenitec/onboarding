@@ -40,6 +40,7 @@ public class LoadInfoDB {
         user_1.setAvatar("https://img.freepik.com/psd-gratis/ilustracion-3d-avatar-o-perfil-humano_23-2150671116.jpg?w=740&t=st=1717867021~exp=1717867621~hmac=0dabc3144ba925f452070e0fa21e5a38a5e28724abece2a7557667988fc84627");
         user_1.setUsername("u1");
         user_1.setPassword("1000");
+        user_1.setCelular("915184044");
         user_1.setCreatedAt(LocalDate.now());
         userRepository.save(user_1);
 

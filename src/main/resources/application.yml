@@ -10,6 +10,11 @@ spring:
     console:
       enabled: true
       path: /h2-console
+config:
+  api:
+    whatsapp:
+      url: https://graph.facebook.com/v19.0/282517814955236/messages
+      token: EAAR4mxBISSIBOxL4aA570GUT1GlyNPuypHT2N6pqIxSMVs1P59ZAmFHDCZCfNKBvFE0WtQg1sgfrw9NobXC16OOCZBZCRC7IMcurISkvsTlBqVMlQPTXhb5nFVl8DGwtHzdRfk1MRBumLkVxPMJL6WAX9oZBpTkIZBMgrcgyjOazSyjp2TxTFbtzDN5GLgx7v7hUfnVaWASZAZAjK1MnDWsZD
 server:
   port: 8085
 logging:
